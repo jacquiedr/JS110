@@ -315,13 +315,11 @@ while (true) {
 
   while (roundCount <= MATCH_ROUND_COUNT) {
     while (true) {
-      if (detectMajorityGamesWon(scores) || roundCount === MATCH_ROUND_COUNT) break;
-
       displayBoard(board);
       prompt(`Current round: ${roundCount} / 3`);
       console.log("");
       displayCurrentScore(scores, "CURRENT SCOREBOARD");
-      
+      console.log(roundCount);
 
       chooseSquare(board, firstMovePlayer, scores);
       firstMovePlayer = alternatePlayer(firstMovePlayer);
@@ -334,6 +332,8 @@ while (true) {
         break;
       };
 
+      if (detectMajorityGamesWon(scores)) break;
+      
       displayBoard(board);
     }
 
