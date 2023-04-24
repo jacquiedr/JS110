@@ -7,13 +7,14 @@ const NUMBER_OF_SQUARES = 25;
 const MATCH_ROUND_COUNT = 3;
 const WINNING_LINES = [
   // Rows
-  [1, 2, 3, 4], [2, 3, 4, 5], [ 6, 7, 8, 9], [ 7, 8, 9, 10], [11, 12, 13, 14],
-  [12, 13, 14, 15], [16, 17, 18, 19], [17, 18, 19, 20], [21, 22, 23, 24], [22, 23, 24, 25],
+  [1, 2, 3], [2, 3, 4], [3, 4, 5], [ 6, 7, 8], [7, 8, 9], [8, 9, 10], [10, 11, 12], [12, 13, 14],
+  [13, 14, 15], [16, 17, 18], [17, 18, 19], [18, 19, 20], [21, 22, 23], [22, 23, 24], [23, 24, 25],
   // Columns
-  [1, 6, 11, 16], [6, 11, 16, 21], [2, 7, 12, 17], [7, 12, 17, 22], [3, 8, 13, 18],
-  [8, 13, 18, 23], [4, 9, 14, 19], [9, 14, 19, 24], [5, 10, 15, 20], [10, 15, 20, 25],
+  [1, 6, 11], [6, 11, 16], [11, 16, 21], [2, 7, 12], [7, 12, 17], [12, 17, 22], [3, 8, 13], [8, 13, 19],
+  [13, 19, 23], [4, 9, 14], [9, 14, 19], [14, 19, 24], [5, 10, 15], [10, 15, 20], [15, 20, 25],
   // Diagonal
-  [1, 7, 13, 19], [7, 13, 19, 25], [5, 9, 13, 17], [9, 13, 17, 21]
+  [1, 7, 13], [7, 13, 19], [13, 19, 25], [5, 9, 13], [9, 13, 17], [13, 17, 21], [3, 7, 11],
+  [4, 8, 12], [8, 12, 16], [10, 14, 18], [14, 18, 22], [15, 19, 23]
 ];
 const CORNERS = [1, 5, 21, 25];
 const CENTER_OF_BOARD = 13;
@@ -77,7 +78,7 @@ function displayCurrentScore(scores, scoreboardTitle) {
   for (let player in scores) {
     prompt(`${player} - ${scores[player]}`);
   }
-  console.log("");
+  console.log(""); // print empty line
 }
 
 function displayOverallWinner(scores) {
@@ -94,32 +95,25 @@ function displayOverallWinner(scores) {
 
 function detectWinner(board) {
   for (let line = 0; line < WINNING_LINES.length; line++) {
-    let [ sq1, sq2, sq3, sq4, sq5 ] = WINNING_LINES[line];
+    let [ sq1, sq2, sq3 ] = WINNING_LINES[line];
 
     if (
       board[sq1] === HUMAN_MARKER &&
       board[sq2] === HUMAN_MARKER &&
-      board[sq3] === HUMAN_MARKER &&
-      board[sq4] === HUMAN_MARKER &&
-      board[sq5] === HUMAN_MARKER 
+      board[sq3] === HUMAN_MARKER
     ) {
       return 'Player';
     } else if (
       board[sq1] === COMPUTER_MARKER &&
       board[sq2] === COMPUTER_MARKER &&
-      board[sq3] === COMPUTER_MARKER &&
-      board[sq4] === COMPUTER_MARKER &&
-      board[sq5] === COMPUTER_MARKER 
+      board[sq3] === COMPUTER_MARKER 
 
     ) {
       return 'Computer 1';
     } else if (
       board[sq1] === COMPUTER_2_MARKER &&
       board[sq2] === COMPUTER_2_MARKER &&
-      board[sq3] === COMPUTER_2_MARKER &&
-      board[sq4] === COMPUTER_2_MARKER &&
-      board[sq5] === COMPUTER_2_MARKER 
-
+      board[sq3] === COMPUTER_2_MARKER
     ) {
       return 'Computer 2';
     }
@@ -230,12 +224,12 @@ function computerChoosesSquare(board, scores, currentPlayerMarker, opposingMarke
 function findAtRiskSquare(line, board, marker1, marker2) {
   let markersInLine = line.map(square => board[square]);
 
-  if (markersInLine.filter(val => val === marker1).length === 3) {
+  if (markersInLine.filter(val => val === marker1).length === 2) {
     let unusedSquare = line.find(square => board[square] === INITIAL_MARKER);
     if (unusedSquare !== undefined) {
       return unusedSquare;
     }
-  } else if (markersInLine.filter(val => val === marker2).length === 3) {
+  } else if (markersInLine.filter(val => val === marker2).length === 2) {
     let unusedSquare = line.find(square => board[square] === INITIAL_MARKER);
     if (unusedSquare !== undefined) {
       return unusedSquare;
@@ -338,14 +332,14 @@ while (true) {
 
     roundCount += 1;
   }
-  console.clear();
+  console.clear(""); // print empty line
   roundCount = 1;
   prompt("And that's the game!")
-  console.log("");
+  console.log(""); // print empty line
 
   displayCurrentScore(scores, "FINAL SCOREBOARD");
   displayOverallWinner(scores);
-  console.log("");
+  console.log(""); // print empty line
   
   let answer = continuePlaying();
   if (answer === 'n') break;
