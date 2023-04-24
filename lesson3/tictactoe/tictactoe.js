@@ -88,6 +88,12 @@ function displayOverallWinner(scores) {
     prompt('Computer 1 won the match! Good game.');
   } else if ((scores['Computer 2'] > scores['Computer 1']) && (scores['Computer 2'] > scores['Player'])) {
     prompt('Computer 2 won the match! Better luck next time, Player and Computer 1.');
+  } else if ((scores['Player'] === scores['Computer 1']) && (scores['Player'] > scores['Computer 2'])){
+    prompt('Player and Computer 1 reigned champions! Great game.');
+  } else if ((scores['Player'] === scores['Computer 2']) && (scores['Player'] > scores['Computer 1'])){
+    prompt('Player and Computer 2 are the winner! Great game.');
+  } else if ((scores['Computer 1'] === scores['Computer 2']) && (scores['Computer 1'] > scores['Player'])){
+    prompt('Player and Computer 1 reigned champions! Great game.');
   } else {
     prompt('The match was a tie! Three strong contenders indeed.');
   }
@@ -204,6 +210,7 @@ function computerChoosesSquare(board, scores, currentPlayerMarker, opposingMarke
       let line = CORNERS[index];
       if (board[line] === INITIAL_MARKER) {
         square = CORNERS[index];
+        break;
       } else {
         square = null;
       }
