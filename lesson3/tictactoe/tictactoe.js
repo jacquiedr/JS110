@@ -317,9 +317,8 @@ while (true) {
     while (true) {
       displayBoard(board);
       prompt(`Current round: ${roundCount} / 3`);
-      console.log("");
+      console.log(""); // print empty line
       displayCurrentScore(scores, "CURRENT SCOREBOARD");
-      console.log(roundCount);
 
       chooseSquare(board, firstMovePlayer, scores);
       firstMovePlayer = alternatePlayer(firstMovePlayer);
