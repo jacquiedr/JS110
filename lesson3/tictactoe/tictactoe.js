@@ -196,7 +196,7 @@ function computerDefense(board, rival1, rival2) {
   return square;
 }
 
-function checkCenterOfBoardAvail(board) {
+function centerOfBoardAvailabilty(board) {
   let square;
   if (board[CENTER_OF_BOARD] === INITIAL_MARKER) {
     square = CENTER_OF_BOARD;
@@ -206,7 +206,7 @@ function checkCenterOfBoardAvail(board) {
   return square;
 }
 
-function checkBoardCornersAvail(board) {
+function boardCornersAvailability(board) {
   let square;
   for (let index = 0; index < CORNERS.length; index += 1) {
     const line = CORNERS[index];
@@ -238,11 +238,11 @@ function computerChoosesSquare(board, marker, rival1, rival2) {
   }
 
   if (!square) {
-    square = checkCenterOfBoardAvail(board);
+    square = centerOfBoardAvailabilty(board);
   }
 
   if (!square) {
-    square = checkBoardCornersAvail(board);
+    square = boardCornersAvailability(board);
   }
 
   if (!square) {
