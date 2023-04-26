@@ -13,7 +13,7 @@ const WINNING_LINES = [
   [22, 23, 24], [23, 24, 25],
   // Columns
   [1, 6, 11], [6, 11, 16], [11, 16, 21], [2, 7, 12], [7, 12, 17], [12, 17, 22], [3, 8, 13],
-  [8, 13, 19], [13, 19, 23], [4, 9, 14], [9, 14, 19], [14, 19, 24], [5, 10, 15], [10, 15, 20],
+  [8, 13, 18], [13, 18, 23], [4, 9, 14], [9, 14, 19], [14, 19, 24], [5, 10, 15], [10, 15, 20],
   [15, 20, 25],
   // Diagonal
   [1, 7, 13], [2, 8, 14], [3, 7, 11], [3, 9, 15], [4, 8, 12], [5, 9, 13], [6, 12, 18], [7, 13, 19],
@@ -75,9 +75,7 @@ function boardFull(board) {
 function displayCurrentScore(scores, scoreboardTitle) {
   prompt(`${scoreboardTitle}`);
   for (const player in scores) {
-    if (Object.hasOwnProperty(player)) {
-      prompt(`${player} - ${scores[player]}`);
-    }
+    prompt(`${player} - ${scores[player]}`);
   }
   console.log(''); // print empty line
 }
@@ -139,8 +137,7 @@ function detectMajorityGamesWon(scores) {
 }
 
 function incrementWinnerPoints(scores, winner) {
-  const updatedResult = scores[winner] + 1;
-  return updatedResult;
+  return scores[winner] += 1;
 }
 
 function joinOr(arr, delimiter = ', ', word = 'or') {
@@ -277,9 +274,7 @@ function alternatePlayer(currentPlayer) {
 
 function resetBoard(board) {
   for (const key in board) {
-    if (Object.hasOwnProperty(board)) {
-      board[key] = INITIAL_MARKER;
-    }
+    board[key] = INITIAL_MARKER;
   }
 }
 
