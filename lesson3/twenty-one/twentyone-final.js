@@ -280,7 +280,8 @@ function innerRoundLoop(deck,scores, playerCards, dealerCards) {
 }
 
 function endOfRound() {
-  readline.question('...And that\'s the game. Press any key to see results');
+  console.clear();
+  readline.question('...And that\'s the game. Press any key to see the results');
 }
 
 // Main game loop
@@ -318,11 +319,6 @@ while (true) {
   displayFinalScoreBoard(scores);
   displayWinnerOfMatch(winner);
 
-  if (playAgain() === 'n') {
-    break;
-  } else {
-    console.clear();
-  }
+  if (playAgain() === 'n') break;
 }
-console.clear();
 prompt('Thanks for playing Twenty-one!');
