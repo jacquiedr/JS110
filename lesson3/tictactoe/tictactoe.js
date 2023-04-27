@@ -369,7 +369,7 @@ while (true) {
   while (roundCount <= MATCH_ROUND_COUNT) {
     while (true) {
       displayBoard(board);
-      console.log(`-------- ROUND ${roundCount} / 3 -------- `);
+      console.log(`-------- ROUND ${roundCount} / ${MATCH_ROUND_COUNT} -------- `);
       console.log(''); // print empty line
       displayScore(scores, 'CURRENT SCOREBOARD');
 
