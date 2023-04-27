@@ -81,26 +81,47 @@ function displayScore(scores, scoreboardTitle) {
   console.log(''); // print empty line
 }
 
-function displayOverallWinner(scores) {
+
+function getOverallWinner(scores) {
   let playerScore = scores['Player'];
   let comp1Score = scores['Computer 1'];
   let comp2Score = scores['Computer 2'];
 
   if ((playerScore > comp1Score) && (playerScore > comp2Score)) {
-    prompt('Player won the match! Congratulations.');
+    return 'player';
   } else if ((comp1Score > comp2Score) && (comp1Score > playerScore)) {
-    prompt('Computer 1 won the match! Good game.');
+    return 'computer 1';
   } else if ((comp2Score > comp1Score) && (comp2Score > playerScore)) {
-    prompt('Computer 2 won the match! Better luck next time, Player and Computer 1.');
+    return 'computer 2';
   } else if ((playerScore === comp1Score) && (playerScore > comp2Score)) {
-    prompt('Player and Computer 1 reigned champions! Great game.');
+    return 'player and computer 1';
   } else if ((playerScore === comp2Score) && (playerScore > comp1Score)) {
-    prompt('Player and Computer 2 are the winner! Great game.');
+    return 'player and computer 2';
   } else if ((comp1Score === comp2Score) && (comp1Score > playerScore)) {
+    return 'computer 1 and computer 2';
+  }
+  return 'tie';
+}
+
+function displayOverallWinner(scores) {
+  let winner = getOverallWinner(scores);
+
+  if (winner === 'player') {
+    prompt('Player won the match! Congratulations.');
+  } else if (winner === 'computer 1') {
+    prompt('Computer 1 won the match! Good game.');
+  } else if (winner === 'computer 2') {
+    prompt('Computer 2 won the match! Better luck next time, Player and Computer 1.');
+  } else if (winner === 'player and computer 1') {
     prompt('Player and Computer 1 reigned champions! Great game.');
+  } else if (winner === 'player and computer 2') {
+    prompt('Player and Computer 2 are the winner! Great game.');
+  } else if (winner === 'computer 1 and computer 2') {
+    prompt('Computer 1 and Computer 2 reigned champions! Great game.');
   } else {
     prompt('The match was a tie! Three strong contenders indeed.');
   }
+  return undefined;
 }
 
 function detectWinner(board) {
@@ -345,7 +366,7 @@ while (true) {
   while (roundCount <= MATCH_ROUND_COUNT) {
     while (true) {
       displayBoard(board);
-      prompt(`Current round: ${roundCount} / 3`);
+      console.log(`-------- ROUND ${roundCount} / 3 -------- `);
       console.log(''); // print empty line
       displayScore(scores, 'CURRENT SCOREBOARD');
 
