@@ -22,8 +22,8 @@ function displayRules() {
   prompt('The goal is to get as close to 21 as possible, without going over 21.');
   prompt('If the player or dealer\'s hand goes over 21, it\'s a bust, and an immediate loss.');
   prompt('Both players start with 2 cards. You can see your own deck, and one card from the dealer\'s deck.');
-  prompt('Player goes first, you can choose to "hit" (get dealt another card whic goes towards your card total).');
-  prompt(`Or you can choose to "stay" (keep your current deck's total). The game is best of ${ROUNDS_IN_MATCH} rounds.`);
+  prompt('Player goes first, you can choose to "hit" (get dealt another card which goes towards your hand\'s total).');
+  prompt(`Or you can choose to "stay" (keep your current hand's total). The game is best of ${ROUNDS_IN_MATCH} rounds.`);
   console.log('');
   return undefined;
 }
