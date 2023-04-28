@@ -120,7 +120,7 @@ function displayOverallWinner(scores) {
   } else {
     prompt('The match was a tie! Three strong contenders indeed.');
   }
-  return undefined;
+  return null;
 }
 
 function detectWinner(board) {
@@ -157,7 +157,7 @@ function incrementWinnerPoints(scores, winner) {
   if (winner) {
     scores[winner] += 1;
   }
-  return undefined;
+  return null;
 }
 
 function joinOr(arr, delimiter = ', ', word = 'or') {
@@ -191,7 +191,7 @@ function playerChoosesSquare(board) {
   }
 
   board[square] = HUMAN_MARKER;
-  return undefined;
+  return null;
 }
 
 function computerOffense(board, rival1, rival2) {
@@ -270,7 +270,7 @@ function computerChoosesSquare(board, marker, rival1, rival2) {
   }
 
   board[square] = marker;
-  return undefined;
+  return null;
 }
 
 function findAtRiskSquare(line, board, marker1, marker2) {
@@ -313,7 +313,7 @@ function alternatePlayer(currentPlayer) {
   } else if (currentPlayer === 'computer 2') {
     return 'player';
   }
-  return undefined;
+  return null;
 }
 
 function resetBoard(board) {
@@ -363,18 +363,19 @@ while (true) {
   prompt(`Welcome to Tic Tac Toe! Today, you (Player) are playing against Two Computers.`);
   prompt(`Get ${WINNING_STREAK} squares in a row to win. Best of ${MATCH_ROUND_COUNT}! Good luck!`);
   console.log('');
-  let firstMovePlayer = pickFirstMovePlayer();
+  const firstMovePlayer = pickFirstMovePlayer();
   let roundCount = 1;
 
   while (roundCount <= MATCH_ROUND_COUNT) {
+    let currentPlayer = firstMovePlayer;
     while (true) {
       displayBoard(board);
       console.log(`-------- ROUND ${roundCount} / ${MATCH_ROUND_COUNT} -------- `);
       console.log(''); // print empty line
       displayScore(scores, 'CURRENT SCOREBOARD');
 
-      chooseSquare(board, firstMovePlayer, scores);
-      firstMovePlayer = alternatePlayer(firstMovePlayer);
+      chooseSquare(board, currentPlayer, scores);
+      currentPlayer = alternatePlayer(currentPlayer);
       if (someoneWon(board) || boardFull(board)) {
         const winner = detectWinner(board);
         incrementWinnerPoints(scores, winner);
