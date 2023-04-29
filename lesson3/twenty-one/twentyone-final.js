@@ -12,7 +12,6 @@ function prompt(message) {
 
 function gameGreeting() {
   prompt('Welcome to Twenty-One!');
-  return undefined;
 }
 
 function displayRules() {
@@ -25,14 +24,11 @@ function displayRules() {
   prompt('Player goes first, you can choose to "hit" (get dealt another card which goes towards your hand\'s total).');
   prompt(`Or you can choose to "stay" (keep your current hand's total). The game is best of ${ROUNDS_IN_MATCH} rounds.`);
   console.log('');
-  return undefined;
 }
 
 function displayCurrentRound(roundCount) {
   console.log('');
   prompt(`---------- Round ${roundCount} / ${ROUNDS_IN_MATCH} ----------`);
-
-  return undefined;
 }
 
 function shuffleDeck(array) {
@@ -62,8 +58,6 @@ function initalizeDeck() {
 function dealInitialHand(deck, playerCards, dealerCards) {
   playerCards.push(...popTwoFromDeck(deck));
   dealerCards.push(...popTwoFromDeck(deck));
-
-  return undefined;
 }
 
 function calculateHandTotal(cards) {
@@ -106,10 +100,8 @@ function detectWinner(dealerTotal, playerTotal) {
   }
 }
 
-function displayWinnerOfRound(dealerTotal, playerTotal) {
-  let result = detectWinner(dealerTotal, playerTotal);
-
-  switch (result) {
+function displayWinnerOfRound(winner) {
+  switch (winner) {
     case 'player':
       prompt('You won the round!');
       break;
@@ -119,8 +111,6 @@ function displayWinnerOfRound(dealerTotal, playerTotal) {
     default:
       prompt("The round was a tie!");
   }
-
-  return undefined;
 }
 
 function detectWinnerOfMatch(scores) {
@@ -145,7 +135,6 @@ function displayFinalScoreBoard(scores) {
   console.clear();
   prompt('----- FINAL SCOREBOARD -----');
   displayScore(scores);
-  return undefined;
 }
 
 function playAgain() {
@@ -178,15 +167,11 @@ function updateScoreboard(scores, winner) {
   if (winner) {
     scores[winner] += 1;
   }
-
-  return undefined;
 }
 
 function displayScore(scores) {
   prompt(`    Player - ${scores.player}    Dealer - ${scores.dealer}`);
   console.log('');
-
-  return undefined;
 }
 
 
@@ -237,15 +222,11 @@ function displayWinnerOfMatch(winner) {
     prompt(`${winner} won the match!`);
   }
   console.log('');
-
-  return undefined;
 }
 
 function displayHands(playerCards, dealerCards) {
   prompt(`Dealer has [${printCards(dealerCards)[0]} and Unknown card].`);
   prompt(`You have [${printCards(playerCards)}] for a total of ${calculateHandTotal(playerCards)}.`);
-
-  return undefined;
 }
 
 
@@ -274,14 +255,14 @@ function innerRoundLoop(deck,scores, playerCards, dealerCards) {
       prompt('Dealer busted!');
     }
   }
-  displayWinnerOfRound(dealerTotal, playerTotal);
-  updateScoreboard(scores, detectWinner(dealerTotal, playerTotal));
-  return undefined;
+  let winner = detectWinner(dealerTotal, playerTotal);
+  displayWinnerOfRound(winner);
+  updateScoreboard(scores, winner);
 }
 
 function endOfRound() {
   console.clear();
-  readline.question('...And that\'s the game. Press any key to see the results');
+  readline.question('...And that\'s the game. Press \'enter\' to see the results');
 }
 
 // Main game loop
@@ -289,7 +270,7 @@ while (true) {
   console.clear();
   gameGreeting();
   displayRules();
-  readline.question('\nPress any key to start the game');
+  readline.question('\nPress \'enter\' to start the game');
   console.clear();
   const scores = {
     player: 0,
@@ -312,7 +293,7 @@ while (true) {
       endOfRound();
       break;
     }
-    readline.question('\nPress any key to continue to next round');
+    readline.question('\nPress \'enter\' to continue to next round');
     console.clear();
   }
   let winner = detectWinnerOfMatch(scores);
