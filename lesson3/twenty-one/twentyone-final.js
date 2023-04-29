@@ -83,7 +83,7 @@ function calculateHandTotal(cards) {
 
 
 function busted(total) {
-  return total > 21;
+  return total > WINNING_NUMBER;
 }
 
 function detectWinner(dealerTotal, playerTotal) {
@@ -261,8 +261,8 @@ function innerRoundLoop(deck,scores, playerCards, dealerCards) {
 }
 
 function endOfRound() {
-  console.clear();
   readline.question('...And that\'s the game. Press \'enter\' to see the results');
+  console.clear();
 }
 
 // Main game loop
