@@ -174,7 +174,7 @@ function joinOr(arr, delimiter = ', ', word = 'or') {
   }
 }
 
-function playerChoosesSquare(board) {
+function promptPlayerForSquare(board) {
   if (someoneWon(board)) {
     return 0;
   }
@@ -246,7 +246,7 @@ function getSquareAtRandomIndex(board) {
   return square;
 }
 
-function computerChoosesSquare(board, marker, rival1, rival2) {
+function getComputerSquareChoice(board, marker, rival1, rival2) {
   if (someoneWon(board)) {
     return 0;
   }
@@ -294,12 +294,12 @@ function findAtRiskSquare(line, board, marker1, marker2) {
 
 function chooseSquare(board, currentPlayer, scores) {
   if (currentPlayer === 'player') {
-    return playerChoosesSquare(board, scores);
+    return promptPlayerForSquare(board, scores);
   } else if (currentPlayer === 'computer 1') {
-    return computerChoosesSquare(board, COMPUTER_MARKER,
+    return getComputerSquareChoice(board, COMPUTER_MARKER,
       HUMAN_MARKER, COMP_2_MARKER);
   } else if (currentPlayer === 'computer 2') {
-    return computerChoosesSquare(board, COMP_2_MARKER,
+    return getComputerSquareChoice(board, COMP_2_MARKER,
       HUMAN_MARKER, COMPUTER_MARKER);
   }
   return undefined;
@@ -339,7 +339,7 @@ function pickFirstMovePlayer() {
 
 // Ask player if they wish to continue playing
 function continuePlaying() {
-  const validInputs = ['y', 'n'];
+  const validInputs = ['y', 'n', 'yes', 'no'];
   let answer;
   prompt('Would you like to play again? y/n');
   while (true) {
@@ -348,6 +348,58 @@ function continuePlaying() {
     prompt("That's not a valid choice.");
   }
   return answer;
+}
+
+function displayRoundCount(roundCount) {
+  console.log(`-------- ROUND ${roundCount} / ${MATCH_ROUND_COUNT} -------- `);
+  printEmptyLine();
+  return null;
+}
+
+function playRound(board, scores, roundCount, currentPlayer) {
+  while (true) {
+    displayBoard(board);
+    displayRoundCount(roundCount);
+    displayScore(scores, 'CURRENT SCOREBOARD');
+    chooseSquare(board, currentPlayer, scores);
+    currentPlayer = alternatePlayer(currentPlayer);
+    if (someoneWon(board) || boardFull(board)) {
+      const winner = detectWinner(board);
+      incrementWinnerPoints(scores, winner);
+      resetBoard(board);
+      break;
+    }
+    if (detectMajorityGamesWon(scores)) break;
+    displayBoard(board);
+  }
+
+  roundCount += 1;
+  return roundCount;
+}
+
+function printEmptyLine() {
+  console.log('');
+  return null;
+}
+
+function greetPlayer() {
+  prompt(`Welcome to Tic Tac Toe! Today, you (Player) are playing against Two Computers.`);
+  return null;
+}
+
+function displayTTTRules() {
+  prompt(`Get ${WINNING_STREAK} squares in a row to win. Best of ${MATCH_ROUND_COUNT}! Good luck!`);
+  return null;
+}
+
+function endRound(scores) {
+  prompt('And that\'s the game!');
+  printEmptyLine();
+
+  displayScore(scores, 'FINAL SCOREBOARD');
+  displayOverallWinner(scores);
+  printEmptyLine();
+  return null;
 }
 
 // Main game loop
@@ -360,47 +412,21 @@ while (true) {
   };
 
   console.clear();
-  prompt(`Welcome to Tic Tac Toe! Today, you (Player) are playing against Two Computers.`);
-  prompt(`Get ${WINNING_STREAK} squares in a row to win. Best of ${MATCH_ROUND_COUNT}! Good luck!`);
-  console.log('');
+  greetPlayer();
+  displayTTTRules();
+  printEmptyLine();
   const firstMovePlayer = pickFirstMovePlayer();
   let roundCount = 1;
 
   while (roundCount <= MATCH_ROUND_COUNT) {
     let currentPlayer = firstMovePlayer;
-    while (true) {
-      displayBoard(board);
-      console.log(`-------- ROUND ${roundCount} / ${MATCH_ROUND_COUNT} -------- `);
-      console.log(''); // print empty line
-      displayScore(scores, 'CURRENT SCOREBOARD');
-
-      chooseSquare(board, currentPlayer, scores);
-      currentPlayer = alternatePlayer(currentPlayer);
-      if (someoneWon(board) || boardFull(board)) {
-        const winner = detectWinner(board);
-        incrementWinnerPoints(scores, winner);
-        resetBoard(board);
-        break;
-      }
-
-      if (detectMajorityGamesWon(scores)) break;
-
-      displayBoard(board);
-    }
-
-    roundCount += 1;
+    roundCount = playRound(board, scores, roundCount, currentPlayer);
   }
-  console.clear(''); // print empty line
-  roundCount = 1;
-  prompt('And that\'s the game!');
-  console.log(''); // print empty line
-
-  displayScore(scores, 'FINAL SCOREBOARD');
-  displayOverallWinner(scores);
-  console.log(''); // print empty line
+  console.clear('');
+  endRound(scores);
 
   const answer = continuePlaying();
-  if (answer === 'n') break;
+  if (answer === 'n' || answer === 'no') break;
 }
 
 prompt('Thanks for playing Tic Tac Toe!');
