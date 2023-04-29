@@ -120,7 +120,6 @@ function displayOverallWinner(scores) {
   } else {
     prompt('The match was a tie! Three strong contenders indeed.');
   }
-  return null;
 }
 
 function detectWinner(board) {
@@ -139,8 +138,6 @@ function detectWinner(board) {
       return 'Computer 2';
     }
   }
-
-  return null;
 }
 
 function someoneWon(board) {
@@ -157,7 +154,6 @@ function incrementWinnerPoints(scores, winner) {
   if (winner) {
     scores[winner] += 1;
   }
-  return null;
 }
 
 function joinOr(arr, delimiter = ', ', word = 'or') {
@@ -191,7 +187,6 @@ function promptPlayerForSquare(board) {
   }
 
   board[square] = HUMAN_MARKER;
-  return null;
 }
 
 function computerOffense(board, rival1, rival2) {
@@ -270,7 +265,6 @@ function getComputerSquareChoice(board, marker, rival1, rival2) {
   }
 
   board[square] = marker;
-  return null;
 }
 
 function findAtRiskSquare(line, board, marker1, marker2) {
@@ -302,7 +296,6 @@ function chooseSquare(board, currentPlayer, scores) {
     return getComputerSquareChoice(board, COMP_2_MARKER,
       HUMAN_MARKER, COMPUTER_MARKER);
   }
-  return undefined;
 }
 
 function alternatePlayer(currentPlayer) {
@@ -313,7 +306,6 @@ function alternatePlayer(currentPlayer) {
   } else if (currentPlayer === 'computer 2') {
     return 'player';
   }
-  return null;
 }
 
 function resetBoard(board) {
@@ -353,7 +345,6 @@ function continuePlaying() {
 function displayRoundCount(roundCount) {
   console.log(`-------- ROUND ${roundCount} / ${MATCH_ROUND_COUNT} -------- `);
   printEmptyLine();
-  return null;
 }
 
 function playRound(board, scores, roundCount, currentPlayer) {
@@ -379,17 +370,14 @@ function playRound(board, scores, roundCount, currentPlayer) {
 
 function printEmptyLine() {
   console.log('');
-  return null;
 }
 
 function greetPlayer() {
   prompt(`Welcome to Tic Tac Toe! Today, you (Player) are playing against Two Computers.`);
-  return null;
 }
 
 function displayTTTRules() {
   prompt(`Get ${WINNING_STREAK} squares in a row to win. Best of ${MATCH_ROUND_COUNT}! Good luck!`);
-  return null;
 }
 
 function endRound(scores) {
@@ -399,7 +387,6 @@ function endRound(scores) {
   displayScore(scores, 'FINAL SCOREBOARD');
   displayOverallWinner(scores);
   printEmptyLine();
-  return null;
 }
 
 // Main game loop
